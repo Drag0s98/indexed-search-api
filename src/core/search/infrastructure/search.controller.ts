@@ -44,4 +44,9 @@ export class SearchController {
   ): Promise<SearchResponseDTO> {
     return await this.searchService.searchQuery(params);
   }
+
+  @Get("/suggestion")
+  async suggestion(@Query() params: { prefix: string, index_name: string }): Promise<any> {
+    return await this.searchService.suggestionQuery(params.prefix, params.index_name);
+  }
 }

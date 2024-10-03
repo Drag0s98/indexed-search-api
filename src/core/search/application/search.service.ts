@@ -8,7 +8,7 @@ const csv = require("csvtojson/v2");
 
 @Injectable()
 export class SearchService {
-  private openSearchClient;
+  private readonly openSearchClient;
   logger: Logger;
   constructor(
     @Inject("Open_Search_Client") openSearchClient,
@@ -127,6 +127,38 @@ export class SearchService {
       data,
       pagination,
     };
+
+    return payload;
+  }
+
+  async suggestionQuery(prefix: string, index_name: string) {
+    const search_body = {
+      _source: false,
+      fields: ["text", "asin"],
+      suggest: {
+        autocomplete: {
+          prefix: prefix,
+          completion: {
+            field: "title",
+            size: 5,
+          },
+        },
+      }
+    };
+
+    const { body } = await this.openSearchClient.search({
+      index: index_name,
+      body: search_body,
+    });
+
+    const options = body.suggest.autocomplete[0].options;
+
+    const payload = options.map((element) => {
+      return {
+        prefix: element.text.split(" ").slice(0, 4).toString().replaceAll(",", " "),
+        id: element.fields.asin[0],
+      };
+    });
 
     return payload;
   }
