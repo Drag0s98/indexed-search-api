@@ -108,7 +108,7 @@ export class SearchService {
     };
 
     const res = await this.openSearchClient.search({
-      index: "amazon-store*",
+      index: params.index,
       size: params.to,
       from: params.from,
       body: search_body,

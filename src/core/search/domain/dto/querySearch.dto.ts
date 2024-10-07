@@ -12,4 +12,7 @@ export class QuerySearchDTO {
   @IsInt()
   @Type(() => Number)
   from: number;
+
+  @IsString()
+  index: string;
 }

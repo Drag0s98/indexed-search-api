@@ -14,7 +14,7 @@ import { FileInterceptor } from "@nestjs/platform-express";
 import { QuerySearchDTO } from "../domain/dto/querySearch.dto";
 import { SearchResponseDTO } from "../domain/dto/searchResponse.dto";
 
-@Controller("search")
+@Controller("/api/search")
 export class SearchController {
   constructor(private searchService: SearchService) {}
   @Post("/bulk")
