@@ -89,22 +89,6 @@ export class SearchService {
           title: params.query,
         },
       },
-      sort: [
-        {
-          ["isBestSeller.keyword"]: {
-            order: "asc",
-          },
-          ["boughtInLastMonth.keyword"]: {
-            order: "desc",
-          },
-          ["reviews.keyword"]: {
-            order: "desc",
-          },
-          ["stars.keyword"]: {
-            order: "desc",
-          },
-        },
-      ],
     };
 
     const res = await this.openSearchClient.search({
@@ -143,7 +127,7 @@ export class SearchService {
             size: 5,
           },
         },
-      }
+      },
     };
 
     const { body } = await this.openSearchClient.search({
@@ -155,7 +139,11 @@ export class SearchService {
 
     const payload = options.map((element) => {
       return {
-        prefix: element.text.split(" ").slice(0, 4).toString().replaceAll(",", " "),
+        prefix: element.text
+          .split(" ")
+          .slice(0, 4)
+          .toString()
+          .replaceAll(",", " "),
         id: element.fields.asin[0],
       };
     });
