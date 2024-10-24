@@ -2,8 +2,9 @@ import { Module } from "@nestjs/common";
 import { SearchController } from "./search.controller";
 import { SearchService } from "../application/search.service";
 import { Client } from "@opensearch-project/opensearch";
-import "dotenv/config";
 import { HttpModule } from "@nestjs/axios";
+
+process.loadEnvFile();
 
 @Module({
   controllers: [SearchController],
