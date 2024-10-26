@@ -22,3 +22,4 @@ jobs:
         run: docker tag indexed-search-api dragosgtdev/indexed-search-api
       - name: Push to Dockerhub
         run: docker push dragosgtdev/indexed-search-api:latest
+
