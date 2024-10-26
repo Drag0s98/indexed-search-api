@@ -1,26 +1,24 @@
-name: Docker Image CI
+name: CI Pipeline
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-    
-    steps:
-    - uses: actions/checkout@v4
-    - name: Login Dockerhub
-      env: 
-        DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
-        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
-      run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-    - name: Build the Docker image
-      run: docker build -t indexed-search-api . 
-    - name: Tag Docker image
-      run: docker tag indexed-search-api dragosgtdev/indexed-search-api
-    - name: Push to Dockerhub
-      run: docker push dragosgtdev/indexed-search-api:latest
 
+    steps:
+      - uses: actions/checkout@v4
+      - name: Login Dockerhub
+        env:
+          DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
+          DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+        run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+
+      - name: Build the Docker image
+        run: docker build -t indexed-search-api .
+      # - name: Tag Docker image
+      #   run: docker tag indexed-search-api dragosgtdev/indexed-search-api
+      - name: Push to Dockerhub
+        run: docker push dragosgtdev/indexed-search-api:latest
